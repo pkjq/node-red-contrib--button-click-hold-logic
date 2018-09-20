@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sd-click-hold-processor', {
+        category: 'sd-conmonents',
+        color: '#C0DEED',
+        defaults: {
+            name:               { value: "" },
+
+            buttonId:           { value: "", required: true, },
+
+            holdTimeout:        { value: 350, required: true, validate: function(val) { return val > 0; },   },
+            holdRepeatInterval: { value: 800, required: true, validate: function(val) { return val > 0; },   },
+            holdRepeatGuard:    { value: 800, required: true, validate: function(val) { return val >= 0; },  },
+        },
+        inputs:1,
+        outputs:1,
+        icon: "trigger.png",
+        label: function() {
+            return this.name || "sd-click-hold-processor";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="sd-click-hold-processor">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <br>
+
+    <div class="form-row">
+        <label for="node-input-buttonId"><i class="icon-tag"></i> Button ID</label>
+        <input type="text" id="node-input-buttonId" placeholder="Button ID">
+    </div>
+    <br>
+
+    <div class="form-row">
+        <label for="node-input-holdTimeout"><i class="fa fa-clock-o"></i>Hold timeout (ms)</label>
+        <input type="text" id="node-input-holdTimeout" placeholder="ms">
+    </div>
+    <div class="form-row">
+        <label for="node-input-holdRepeatInterval"><i class="fa fa-refresh"></i>Hold repeat interval (ms)</label>
+        <input type="text" id="node-input-holdRepeatInterval" placeholder="ms">
+    </div>
+    <div class="form-row">
+        <label for="node-input-holdRepeatGuard"><i class="fa fa-clock-o"></i>Hold repeat guard (ms)</label>
+        <input type="text" id="node-input-holdRepeatGuard" placeholder="ms">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="sd-click-hold-processor">
+    <p>SD Click-Hold processor logic</p>
+</script>
