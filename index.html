@@ -1,35 +1,27 @@
 <script type="text/javascript">
-    RED.nodes.registerType('sd-click-hold-processor', {
-        category: 'sd-conmonents',
+    RED.nodes.registerType('Click-Hold logic', {
+        category: 'SD SmartHouse',
         color: '#C0DEED',
         defaults: {
-            name:               { value: "" },
-
-            buttonId:           { value: "", required: true, },
+            name:               { value: "Click Hold logic" },
 
             holdTimeout:        { value: 350, required: true, validate: function(val) { return val > 0; },   },
             holdRepeatInterval: { value: 800, required: true, validate: function(val) { return val > 0; },   },
             holdRepeatGuard:    { value: 800, required: true, validate: function(val) { return val >= 0; },  },
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "trigger.png",
         label: function() {
-            return this.name || "sd-click-hold-processor";
+            return this.name;
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="sd-click-hold-processor">
+<script type="text/x-red" data-template-name="Click-Hold logic">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="name">
-    </div>
-    <br>
-
-    <div class="form-row">
-        <label for="node-input-buttonId"><i class="icon-tag"></i> Button ID</label>
-        <input type="text" id="node-input-buttonId" placeholder="Button ID">
     </div>
     <br>
 
@@ -38,7 +30,7 @@
         <input type="text" id="node-input-holdTimeout" placeholder="ms">
     </div>
     <div class="form-row">
-        <label for="node-input-holdRepeatInterval"><i class="fa fa-refresh"></i>Hold repeat interval (ms)</label>
+        <label for="node-input-holdRepeatInterval"><i class="fa fa-clock-o"></i>Hold repeat interval (ms)</label>
         <input type="text" id="node-input-holdRepeatInterval" placeholder="ms">
     </div>
     <div class="form-row">
@@ -47,6 +39,26 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="sd-click-hold-processor">
-    <p>SD Click-Hold processor logic</p>
+<script type="text/x-red" data-help-name="Click-Hold logic">
+    <p>Click-Hold logic</p>
+    <p><b>Input</b>:</p>
+    <ul>
+        <li><code>msg.payload.state</code> - may be '<i>push</i>' or something else.</li>
+        <li><code>msg.payload.repeat</code> - repeat flag for periodic button events when it's pressed.</li>
+    </ul>
+
+    <p><b>Output</b>:</p>
+    <ul>
+        <li><code>msg.event</code> - may be '<i>click</i>' or pair of '<i>press</i>' and '<i>release</i>'.</li>
+        <li><code>msg.repeat</code> - counter of repeats for periodic button events when it's pressed.</li>
+    </ul>
+    <br>
+
+
+    <p><b>Settings</b>:</p>
+    <ul>
+        <li><code>Hold timeout</code> - time of hold raw button to accept button as pressed.</li>
+        <li><code>Hold repeat interval</code> - interval of repeats output event '<i>press</i>'.</li>
+        <li><code>Hold repeat guard</code> - interval of repeats input events from raw button to prevent connection lost with button. May be equal 0. If event is lost then '<i>release</i>' output event will be generated.</li>
+    </ul>
 </script>
