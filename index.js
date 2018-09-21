@@ -113,6 +113,9 @@ module.exports = function(RED) {
             ClearRepeater.call(this, 'holdRepeatTimer');
             ClearRepeater.call(this, 'holdGuardTimer');
         };
+
+
+        this.status({fill:'grey', text:"standby (pristine)"});
     }
 
     RED.nodes.registerType("Click-Hold logic", ClickHoldProcessorLogic);
