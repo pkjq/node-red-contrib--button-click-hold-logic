@@ -69,6 +69,7 @@ module.exports = function(RED) {
                                 delete this.button_state;
                                 
                                 msg.event = 'release';
+                                delete msg.repeat;
                                 this.send(msg);
                                 
                                 this.status({fill:'red', shape:'dot', text:"hold not confirmed!"});
@@ -85,6 +86,7 @@ module.exports = function(RED) {
                 this.status({fill:'grey', text:"standby"});
                 
                 msg.event = this.button_state;
+                delete msg.repeat;
                 
                 this.ClearAllTimers();
                 delete this.button_state;
