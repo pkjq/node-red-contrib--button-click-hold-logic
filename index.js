@@ -30,22 +30,19 @@ module.exports = function(RED) {
                     this.HoldGuard = false;
                     return;
                 }
-            
-                { // validate
-                    const holdTimer = this.holdTimer;
-                    const holdRepeatTimer = this.holdRepeatTimer;
-                    if (holdTimer || holdRepeatTimer) {
-                        this.error('\'PUSH\' event was twice received! Skip it.');
-                        this.status({fill:'red'});
-                        return;
-                    }
+
+                // validate
+                if (this.button_state) {
+                    this.error('\'PUSH\' event was twice received! Skip it.');
+                    this.status({fill:'red', text:"'push' event was twice received! Skip it."});
+                    return;
                 }
             
                 this.status({fill:'green',shape:'ring',text:"push"});
                 this.button_state = 'click';
             
                 
-                const holdTimer = setTimeout(() => {
+                this.holdTimer = setTimeout(() => {
                     this.status({fill:'green',shape:'dot',text:"hold"});
                     
                     this.button_state = 'release';
@@ -56,13 +53,14 @@ module.exports = function(RED) {
                     
                     this.send(msg);
                     
-                    const holdRepeatTimer = setInterval(() => {
-                        ++msg.repeat;
-                        this.send(msg);
-                    }, config.holdRepeatInterval);
-                    this.holdRepeatTimer = holdRepeatTimer;
+                    if (config.holdRepeatInterval > 0) {
+                        this.holdRepeatTimer = setInterval(() => {
+                            ++msg.repeat;
+                            this.send(msg);
+                        }, config.holdRepeatInterval);
+                    }
                     
-                    if (config.holdRepeatGuard) {
+                    if (config.holdRepeatGuard > 0) {
                         function ResetGuardWatchdog() {
                             const guard = this.HoldGuard;
                     
@@ -82,8 +80,6 @@ module.exports = function(RED) {
                         this.holdGuardTimer = setInterval(ResetGuardWatchdog.bind(this), config.holdRepeatGuard);
                     }
                 }, config.holdTimeout);
-
-                this.holdTimer = holdTimer;
             }
             else {
                 this.status({fill:'grey', text:"standby"});

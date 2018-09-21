@@ -6,7 +6,7 @@
             name:               { value: "Click Hold logic" },
 
             holdTimeout:        { value: 350, required: true, validate: function(val) { return val > 0; },   },
-            holdRepeatInterval: { value: 800, required: true, validate: function(val) { return val > 0; },   },
+            holdRepeatInterval: { value: 800, required: true, validate: function(val) { return val >= 0; },  },
             holdRepeatGuard:    { value: 800, required: true, validate: function(val) { return val >= 0; },  },
         },
         inputs: 1,
@@ -58,7 +58,7 @@
     <p><b>Settings</b>:</p>
     <ul>
         <li><code>Hold timeout</code> - time of hold raw button to accept button as pressed.</li>
-        <li><code>Hold repeat interval</code> - interval of repeats output event '<i>press</i>'.</li>
+        <li><code>Hold repeat interval</code> - interval of repeats output event '<i>press</i>' If equal 0 then no generation of repeated events.</li>
         <li><code>Hold repeat guard</code> - interval of repeats input events from raw button to prevent connection lost with button. May be equal 0. If event is lost then '<i>release</i>' output event will be generated.</li>
     </ul>
 </script>
