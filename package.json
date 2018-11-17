@@ -1,9 +1,23 @@
 {
-    "name" : "node-red-contrib-sd-click-hold-logic",
-
-    "node-red" : {
-        "nodes": {
-            "click-hold-logic": "index.js"
-        }
+    "name": "node-red-contrib--click-hold-logic-pkjq",
+    "version": "0.0.1",
+    "description": "logic for process button events",
+    "node-red": {
+      "nodes": {
+        "click-hold-logic": "click-hold-logic.js"
+      }
+    },  
+    "keywords": [
+      "button events",
+      "node-red"
+    ],
+    "author": "pkjq",
+    "license": "MIT",
+    "dependencies": {
+    },
+    "repository": {
+      "type" : "git",
+      "url" : "https://github.com/pkjq/node-red-contrib--button-click-hold-logic.git"
     }
-}
+  }
+  
